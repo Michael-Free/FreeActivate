@@ -3,9 +3,11 @@ A Powershell module to activate Volume Licensed Windows Desktop and Windows Serv
 
 ## Description
 
-## Functions
+## Features
 
 ## Installation
+Installing FreeActivate from the Powershell Gallery:
+  - ```Install-Module -Name FreeActivate```
 
 ## Usage
 Importing the FreeActivate Module:
@@ -21,7 +23,13 @@ Activating with a MAK Key:
   - ```Set-MakActivation -Key XXX-XXX-XXX-XXX```
 
 ## Requirements
+- Windows 10+
+- Windows Server 2016+
+- Powershell v5.1+
 
 ## License
+MIT License
+License Information can be found [HERE](https://github.com/Michael-Free/FreeActivate/blob/main/LICENSE).
 
 ## Author
+Michael Free
