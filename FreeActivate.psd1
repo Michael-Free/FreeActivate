@@ -33,13 +33,13 @@ Copyright = '(c) Michael Free. All rights reserved.'
 Description = 'A Powershell module to activate Volume Licensed Windows Desktop and Windows Server OS on the command line. '
 
 # Minimum version of the PowerShell engine required by this module
-# PowerShellVersion = ''
+PowerShellVersion = '5.1'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
 
 # Minimum version of the PowerShell host required by this module
-# PowerShellHostVersion = ''
+PowerShellHostVersion = '5.1'
 
 # Minimum version of Microsoft .NET Framework required by this module. This prerequisite is valid for the PowerShell Desktop edition only.
 # DotNetFrameworkVersion = ''
@@ -116,7 +116,14 @@ PrivateData = @{
             'Windows',
             'Volume License',
             'Licensing',
-            'Activate'
+            'Activate',
+            'SysAdmin',
+            'System Administrator',
+            'System Administration',
+            'Microsoft',
+            'VLSC',
+            'Volume License Agreement',
+            'Troubleshooting'
         )
 
         # A URL to the license for this module.
