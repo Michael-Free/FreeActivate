@@ -49,8 +49,8 @@ function Set-KmsActivation() {
     throw "Incorrect Windows Key Format"
   }
 
-  $activationKey = $KmsClientKey.ToUpper()
-  
+  $activationKey = $Key.ToUpper()
+
   try {
     cscript.exe /Nologo $script:slmgrPath /ipk $activationKey
   } catch {
