@@ -17,10 +17,10 @@ Getting the Activation status of the device:
   - ```Get-Activation```
 
 Activating with a KMS Key:
-  - ```Set-KmsActivation -Server <FQDN/IP Address> -Key XXXX-XXXXX-XXXXX-XXXX```
+  - ```Set-KmsActivation -Server <FQDN/IP Address> -Key XXXXX-XXXXX-XXXXX-XXXXX-XXXXX```
 
 Activating with a MAK Key:
-  - ```Set-MakActivation -Key XXX-XXX-XXX-XXX```
+  - ```Set-MakActivation -Key XXXXX-XXXXX-XXXXX-XXXXX-XXXXX```
 
 ## Requirements
 - Windows 10+

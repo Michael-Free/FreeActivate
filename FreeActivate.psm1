@@ -6,7 +6,7 @@ $windowsKeyRegex = '^[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}
 $slmgrPath = Join-Path -Path $env:SystemRoot -ChildPath "System32\slmgr.vbs"
 
 function Get-Activation() {
-  $licenseInfo = (cscript.exe //NoLogo $script:slmgrPath /dlv) -Split "`n"
+  $licenseInfo = (cscript.exe /NoLogo $script:slmgrPath /dlv) -Split "`n"
   $licenseStatus = $licenseInfo | ForEach-Object { 
     if ($_ -like "*License Status*") {
       $_ -replace ".*License Status: ", "" 
@@ -48,6 +48,9 @@ function Set-KmsActivation() {
   if ($Key -notmatch $script:windowsKeyRegex) {
     throw "Incorrect Windows Key Format"
   }
+
+  $activationKey = $KmsClientKey.ToUpper()
+
 }
 
 #function Set-MakActivation() {
