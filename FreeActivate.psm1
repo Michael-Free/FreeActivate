@@ -49,7 +49,10 @@ function Set-KmsActivation() {
     throw "Incorrect Windows Key Format"
   }
 
-  ## Test Connection
+  if (-not (Test-Connection -ComputerName $Server -Count 2 -Quiet)) {
+    throw "No route to KMS Server"
+  }
+
   ## Test Port
 
   $activationKey = $Key.ToUpper()
