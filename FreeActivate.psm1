@@ -58,6 +58,8 @@ function Set-KmsActivation() {
     throw "Port 1688 not open on KMS Server"
   }
 
+  $activationKey = $Key.ToUpper()
+
   if ($PSCmdlet.ShouldProcess("KMS Server Configuration", "Set KMS Server to $Server and install activation key $Key")) {
     try {
       cscript.exe /NoLogo $script:slmgrPath /ipk $activationKey
@@ -105,4 +107,22 @@ function Set-MakActivation() {
     throw "Incorrect Windows Key Format"
   }
 
+  $activationKey = $Key.ToUpper()
+
+  if ($PSCmdlet.ShouldProcess("Install Multiple Activation Key", "Set MAK Key and install activation key $Key")) {
+    try {
+      cscript.exe /NoLogo $script:slmgrPath /ipk $activationKey
+      if ($LASTEXITCODE -ne 0) {
+          throw "Error installing product key. Exit Code: $LASTEXITCODE"
+      }
+      cscript.exe /NoLogo $script:slmgrPath /ato
+      if ($LASTEXITCODE -ne 0) {
+          throw "Error activating Windows. Exit Code: $LASTEXITCODE"
+      }
+      $activationStatus = Get-Activation
+      return $activationStatus
+    } catch {
+      throw "Error during licensing operation: $_"
+    }
+  }
 }
