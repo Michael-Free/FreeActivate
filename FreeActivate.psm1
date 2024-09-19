@@ -53,7 +53,9 @@ function Set-KmsActivation() {
     throw "No route to KMS Server"
   }
 
-  ## Test Port
+  if (-not (Test-NetConnection -ComputerName $Server -Port 1688)) {
+    throw "Port 1688 not open on KMS Server"
+  }
 
   $activationKey = $Key.ToUpper()
 
@@ -72,14 +74,14 @@ function Set-KmsActivation() {
     if ($LASTEXITCODE -ne 0) {
         throw "Error activating Windows. Exit Code: $LASTEXITCODE"
     }
+
+    $activationStatus = Get-Activation
+
+    return $activationStatus
+
   } catch {
     throw "Error during licensing operation: $_"
   }
-
-  $activationStatus = Get-Activation
-
-  return $activationStatus
-
 }
 
 #function Set-MakActivation() {
