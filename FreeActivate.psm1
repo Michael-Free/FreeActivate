@@ -7,9 +7,9 @@ $slmgrPath = Join-Path -Path $env:SystemRoot -ChildPath "System32\slmgr.vbs"
 
 function Get-Activation() {
   $licenseInfo = (cscript.exe /NoLogo $script:slmgrPath /dlv) -Split "`n"
-  $licenseStatus = $licenseInfo | ForEach-Object { 
+  $licenseStatus = $licenseInfo | ForEach-Object {
     if ($_ -like "*License Status*") {
-      $_ -replace ".*License Status: ", "" 
+      $_ -replace ".*License Status: ", ""
     }
   }
   $licenseObject = [pscustomobject]@{
@@ -19,6 +19,7 @@ function Get-Activation() {
 }
 
 function Set-KmsActivation() {
+  [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='High')]
   param(
     [Parameter(Mandatory=$true)]
     [string]$Server,
@@ -57,30 +58,25 @@ function Set-KmsActivation() {
     throw "Port 1688 not open on KMS Server"
   }
 
-  $activationKey = $Key.ToUpper()
-
-  try {
-    cscript.exe /NoLogo $script:slmgrPath /ipk $activationKey
-    if ($LASTEXITCODE -ne 0) {
-        throw "Error installing product key. Exit Code: $LASTEXITCODE"
+  if ($PSCmdlet.ShouldProcess("KMS Server Configuration", "Set KMS Server to $Server and install activation key $Key")) {
+    try {
+      cscript.exe /NoLogo $script:slmgrPath /ipk $activationKey
+      if ($LASTEXITCODE -ne 0) {
+          throw "Error installing product key. Exit Code: $LASTEXITCODE"
+      }
+      cscript.exe /NoLogo $script:slmgrPath /skms $Server
+      if ($LASTEXITCODE -ne 0) {
+          throw "Error setting KMS Server. Exit Code: $LASTEXITCODE"
+      }
+      cscript.exe /NoLogo $script:slmgrPath /ato
+      if ($LASTEXITCODE -ne 0) {
+          throw "Error activating Windows. Exit Code: $LASTEXITCODE"
+      }
+      $activationStatus = Get-Activation
+      return $activationStatus
+    } catch {
+      throw "Error during licensing operation: $_"
     }
-
-    cscript.exe /NoLogo $script:slmgrPath /skms $Server
-    if ($LASTEXITCODE -ne 0) {
-        throw "Error setting KMS Server. Exit Code: $LASTEXITCODE"
-    }
-
-    cscript.exe /NoLogo $script:slmgrPath /ato
-    if ($LASTEXITCODE -ne 0) {
-        throw "Error activating Windows. Exit Code: $LASTEXITCODE"
-    }
-
-    $activationStatus = Get-Activation
-
-    return $activationStatus
-
-  } catch {
-    throw "Error during licensing operation: $_"
   }
 }
 
