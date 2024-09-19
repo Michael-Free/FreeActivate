@@ -50,6 +50,12 @@ function Set-KmsActivation() {
   }
 
   $activationKey = $KmsClientKey.ToUpper()
+  
+  try {
+    cscript.exe /Nologo $script:slmgrPath /ipk $activationKey
+  } catch {
+    throw "Error installing product key: $_"
+  }
 
 }
 
