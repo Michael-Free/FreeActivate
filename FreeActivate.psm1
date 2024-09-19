@@ -25,6 +25,9 @@ function Set-KmsActivation() {
     [string]$Key
   )
 
+  $Server.Replace(' ', '')
+  $Key.Replace(' ', '')
+
   $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
   $currentPrincipal = new-object Security.Principal.WindowsPrincipal($currentUser)
   $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
@@ -34,9 +37,12 @@ function Set-KmsActivation() {
   }
 
   if ([string]::IsNullOrEmpty($Server) -or [string]::IsNullOrEmpty($Key)) {
-    throw "-Key or -Server parameters cannot be empty or have a null value."
+    throw "Key and Server parameters cannot be empty or have a null value."
   }
 
+  if ($Server -notmatch $script:ipRegex -and $Server -notmatch $script:fqdnRegex) {
+    throw "Server parameter does not match IP or FQDN format"
+  }
 }
 
 #function Set-MakActivation() {
