@@ -43,6 +43,10 @@ function Set-KmsActivation() {
   if ($Server -notmatch $script:ipRegex -and $Server -notmatch $script:fqdnRegex) {
     throw "Server parameter does not match IP or FQDN format"
   }
+
+  if ($Key -notmatch $script:windowsKeyRegex) {
+    throw "Incorrect Windows Key Format"
+  }
 }
 
 #function Set-MakActivation() {
