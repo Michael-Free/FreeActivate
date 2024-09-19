@@ -52,11 +52,31 @@ function Set-KmsActivation() {
   $activationKey = $Key.ToUpper()
 
   try {
-    cscript.exe /Nologo $script:slmgrPath /ipk $activationKey
+    cscript.exe /NoLogo $script:slmgrPath /ipk $activationKey
+    if ($LASTEXITCODE -ne 0) {
+      throw "Error installing product key. Exit Code: $LASTEXITCODE"
+    }
   } catch {
     throw "Error installing product key: $_"
   }
 
+  try {
+    cscript.exe /NoLogo $script:slmgrPath /skms $Server
+    if ($LASTEXITCODE -ne 0) {
+      throw "Error setting KMS Server. Exit code: $LASTEXITCODE"
+    }
+  } catch {
+    throw "Error setting KMS Server: $_"
+  }
+
+  try {
+    cscript.exe /NoLogo $script:slmgrPath /ato
+    if ($LASTEXITCODE -ne 0) {
+      throw "Error Activating Windows. Exit code: $LASTEXITCODE"
+    }
+  } catch {
+    throw "Error Activating Windows: $_"
+  }
 }
 
 #function Set-MakActivation() {
