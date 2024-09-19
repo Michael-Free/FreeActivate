@@ -3,9 +3,10 @@
 $ipRegex = '^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$'
 $fqdnRegex = '^(?=.{1,255}$)([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\.)+[a-zA-Z]{2,}$'
 $windowsKeyRegex = '^[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}$'
+$slmgrPath = Join-Path -Path $env:SystemRoot -ChildPath "System32\slmgr.vbs"
 
 function Get-Activation() {
-  $licenseInfo = (cscript.exe /nologo C:\Windows\System32\slmgr.vbs /dlv) -Split "`n"
+  $licenseInfo = (cscript.exe //NoLogo $script:slmgrPath /dlv) -Split "`n"
   $licenseStatus = $licenseInfo | ForEach-Object { 
     if ($_ -like "*License Status*") {
       $_ -replace ".*License Status: ", "" 
