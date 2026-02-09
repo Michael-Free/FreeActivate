@@ -32,7 +32,7 @@
     <maml:alertSet>
       <maml:alert>
         <maml:para>Author: Michael Free
-Date Created: January 29, 2026
+Date Created: January 29, 2026.
 Prerequisites:
 - Must be run with administrative privileges
 - Requires slmgr.vbs to be available (default Windows component)

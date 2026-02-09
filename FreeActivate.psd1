@@ -12,7 +12,7 @@
 RootModule = 'FreeActivate.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.17'
+ModuleVersion = '0.2.19'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
