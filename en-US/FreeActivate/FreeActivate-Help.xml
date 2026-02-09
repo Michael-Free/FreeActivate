@@ -401,19 +401,4 @@ Use with caution in production environments.</maml:para>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
-</helpItems>2345-ABCDE-67890-FGHIJ-12345" -WhatIf</maml:para>
-          <maml:para>&#x80;</maml:para>
-          <maml:para>Description: Shows what would happen without actually making changes (WhatIf scenario).</maml:para>
-        </maml:introduction>
-        <dev:code />
-        <dev:remarks />
-      </command:example>
-    </command:examples>
-    <command:relatedLinks>
-      <maml:navigationLink>
-        <maml:linkText>Online Version</maml:linkText>
-        <command:uri />
-      </maml:navigationLink>
-    </command:relatedLinks>
-  </command:command>
 </helpItems>

@@ -183,5 +183,7 @@ Use with caution in production environments.
 
 ## RELATED LINKS
 
-{{ Fill in the related links here }}
+- https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn502526(v=ws.11)
+- https://www.reddit.com/r/sysadmin/comments/1aqxzd/how_exactly_does_mak_activation_work/
+- https://learn.microsoft.com/en-us/office/volume-license-activation/activate-office-by-using-mak
 

@@ -69,11 +69,9 @@ Set-MakActivation -ProductKey "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-License
 
 ## License
 This project is licensed under the terms included in the LICENSE file.
-Disclaimer.
 
 This is using the Free Custom License (FCL v1.0)
 

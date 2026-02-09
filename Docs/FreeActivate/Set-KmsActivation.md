@@ -165,7 +165,6 @@ None. This function does not accept pipeline input.
 
 Returns the activation status from the Get-Activation function after successful configuration.
 
-
 ## NOTES
 
 Author: Michael Free
