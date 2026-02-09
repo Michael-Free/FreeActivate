@@ -56,6 +56,7 @@ function Get-ActivationPattern {
   - WindowsKey: 5 groups of 5 alphanumeric characters separated by hyphens
 
   The function requires at least one parameter to be provided.
+  This is a placeholder function to be used later on
   #>
   [CmdletBinding()]
   param(

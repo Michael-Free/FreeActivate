@@ -401,11 +401,7 @@ Use with caution in production environments.</maml:para>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
-</helpItems>
-      <command:example>
-        <maml:title>--------- EXAMPLE 3 ---------</maml:title>
-        <maml:introduction>
-          <maml:para>Set-MakActivation -Key "12345-ABCDE-67890-FGHIJ-12345" -WhatIf</maml:para>
+</helpItems>2345-ABCDE-67890-FGHIJ-12345" -WhatIf</maml:para>
           <maml:para>&#x80;</maml:para>
           <maml:para>Description: Shows what would happen without actually making changes (WhatIf scenario).</maml:para>
         </maml:introduction>
