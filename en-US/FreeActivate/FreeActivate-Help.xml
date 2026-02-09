@@ -18,25 +18,14 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters />
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <dev:name>None. This function does not accept pipeline input.</dev:name>
-        </dev:type>
-        <maml:description>
-          <maml:para>{{ Fill in the Description }}</maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
+    <command:inputTypes />
     <command:returnValues>
       <command:returnValue>
         <dev:type>
           <dev:name>PSCustomObject</dev:name>
         </dev:type>
         <maml:description>
-          <maml:para>Returns a custom object with a LicenseStatus property containing the Windows activation status.
-
-{{ Fill in the Description }}</maml:para>
+          <maml:para>Returns a custom object with a LicenseStatus property containing the Windows activation status.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -176,25 +165,14 @@ The server must be reachable and have port 1688 open for KMS activation.</maml:p
         <command:parameterValue required="false" variableLength="true">System.Management.Automation.SwitchParameter</command:parameterValue>
       </command:parameter>
     </command:parameters>
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <dev:name>None. This function does not accept pipeline input.</dev:name>
-        </dev:type>
-        <maml:description>
-          <maml:para>{{ Fill in the Description }}</maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
+    <command:inputTypes />
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <dev:name>PSCustomObject</dev:name>
+          <dev:name>PSCustomObject4</dev:name>
         </dev:type>
         <maml:description>
-          <maml:para>Returns the activation status from the Get-Activation function after successful configuration.
-
-{{ Fill in the Description }}</maml:para>
+          <maml:para>Returns the activation status from the Get-Activation function after successful configuration.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -336,25 +314,14 @@ The key will be converted to uppercase automatically.</maml:para>
         <command:parameterValue required="false" variableLength="true">System.Management.Automation.SwitchParameter</command:parameterValue>
       </command:parameter>
     </command:parameters>
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <dev:name>None. This function does not accept pipeline input.</dev:name>
-        </dev:type>
-        <maml:description>
-          <maml:para>{{ Fill in the Description }}</maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
+    <command:inputTypes />
     <command:returnValues>
       <command:returnValue>
         <dev:type>
           <dev:name>PSCustomObject</dev:name>
         </dev:type>
         <maml:description>
-          <maml:para>Returns the activation status from the Get-Activation function after successful activation.
-
-{{ Fill in the Description }}</maml:para>
+          <maml:para>Returns the activation status from the Get-Activation function after successful activation.</maml:para>
         </maml:description>
       </command:returnValue>
     </command:returnValues>
@@ -416,6 +383,25 @@ Use with caution in production environments.</maml:para>
         <dev:code />
         <dev:remarks />
       </command:example>
+      <command:example>
+        <maml:title>--------- EXAMPLE 3 ---------</maml:title>
+        <maml:introduction>
+          <maml:para>Set-MakActivation -Key "12345-ABCDE-67890-FGHIJ-12345" -WhatIf</maml:para>
+          <maml:para>&#x80;</maml:para>
+          <maml:para>Description: Shows what would happen without actually making changes (WhatIf scenario).</maml:para>
+        </maml:introduction>
+        <dev:code />
+        <dev:remarks />
+      </command:example>
+    </command:examples>
+    <command:relatedLinks>
+      <maml:navigationLink>
+        <maml:linkText>Online Version</maml:linkText>
+        <command:uri />
+      </maml:navigationLink>
+    </command:relatedLinks>
+  </command:command>
+</helpItems>
       <command:example>
         <maml:title>--------- EXAMPLE 3 ---------</maml:title>
         <maml:introduction>

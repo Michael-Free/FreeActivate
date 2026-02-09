@@ -26,7 +26,7 @@ Get-ActivationStatus
 ## ALIASES
 
 This cmdlet has the following aliases,
-  {{Insert list of aliases}}
+
 
 ## DESCRIPTION
 
@@ -60,16 +60,13 @@ Description: Stores the activation status in a variable and displays it.
 
 ## INPUTS
 
-### None. This function does not accept pipeline input.
-
-{{ Fill in the Description }}
+None. This function does not accept pipeline input.
 
 ## OUTPUTS
 
 ### PSCustomObject
 Returns a custom object with a LicenseStatus property containing the Windows activation status.
 
-{{ Fill in the Description }}
 
 ## NOTES
 

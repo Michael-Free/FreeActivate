@@ -26,7 +26,6 @@ Set-MakActivation [-Key] <string> [-WhatIf] [-Confirm] [<CommonParameters>]
 ## ALIASES
 
 This cmdlet has the following aliases,
-  {{Insert list of aliases}}
 
 ## DESCRIPTION
 
@@ -137,16 +136,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None. This function does not accept pipeline input.
-
-{{ Fill in the Description }}
+None. This function does not accept pipeline input.
 
 ## OUTPUTS
 
 ### PSCustomObject
 Returns the activation status from the Get-Activation function after successful activation.
 
-{{ Fill in the Description }}
 
 ## NOTES
 

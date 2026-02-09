@@ -26,7 +26,6 @@ Set-KmsActivation [-Server] <string> [-Key] <string> [-WhatIf] [-Confirm] [<Comm
 ## ALIASES
 
 This cmdlet has the following aliases,
-  {{Insert list of aliases}}
 
 ## DESCRIPTION
 
@@ -158,16 +157,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None. This function does not accept pipeline input.
-
-{{ Fill in the Description }}
+None. This function does not accept pipeline input.
 
 ## OUTPUTS
 
-### PSCustomObject
+### PSCustomObject4
+
 Returns the activation status from the Get-Activation function after successful configuration.
 
-{{ Fill in the Description }}
 
 ## NOTES
 
