@@ -1,128 +1,88 @@
-# FreeActivate.psm1
+<#
+.SYNOPSIS
+Windows Activation Management module for PowerShell.
 
-$ipRegex = '^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])$'
-$fqdnRegex = '^(?=.{1,255}$)([a-zA-Z0-9]+(-[a-zA-Z0-9]+)*\.)+[a-zA-Z]{2,}$'
-$windowsKeyRegex = '^[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}$'
-$slmgrPath = Join-Path -Path $env:SystemRoot -ChildPath "System32\slmgr.vbs"
+.DESCRIPTION
+The WindowsActivation module provides comprehensive tools for managing Windows
+activation and licensing. It includes functions for retrieving activation status,
+validating activation patterns, configuring KMS (Key Management Service) activation,
+and setting MAK (Multiple Activation Key) activation.
 
-function Get-Activation() {
-  $licenseInfo = (cscript.exe /NoLogo $script:slmgrPath /dlv) -Split "`n"
-  $licenseStatus = $licenseInfo | ForEach-Object {
-    if ($_ -like "*License Status*") {
-      $_ -replace ".*License Status: ", ""
-    }
-  }
-  $licenseObject = [pscustomobject]@{
-    LicenseStatus = $licenseStatus
-  }
-  return $licenseObject
-}
+This module is designed for system administrators and IT professionals who need to
+manage Windows licensing in enterprise environments. It provides a consistent,
+validated interface for common activation tasks that would typically require
+manual use of slmgr.vbs commands.
 
-function Set-KmsActivation() {
-  [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='High')]
-  param(
-    [Parameter(Mandatory=$true)]
-    [string]$Server,
-    [Parameter(Mandatory=$true)]
-    [string]$Key
-  )
+.PARAMETER None
+This module does not accept parameters at the module level.
 
-  $Server.Replace(' ', '')
-  $Key.Replace(' ', '')
+.INPUTS
+None at the module level. See individual functions for specific input requirements.
 
-  $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
-  $currentPrincipal = new-object Security.Principal.WindowsPrincipal($currentUser)
-  $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+.OUTPUTS
+None at the module level. See individual functions for specific output types.
 
-  if (-not $isAdmin) {
-    throw "This command requires administrative privileges"
-  }
+.EXAMPLE
+PS C:\> Import-Module WindowsActivation
+PS C:\> Get-ActivationStatus
 
-  if ([string]::IsNullOrEmpty($Server) -or [string]::IsNullOrEmpty($Key)) {
-    throw "Key and Server parameters cannot be empty or have a null value."
-  }
+Description: Imports the module and retrieves the current Windows activation status.
 
-  if ($Server -notmatch $script:ipRegex -and $Server -notmatch $script:fqdnRegex) {
-    throw "Server parameter does not match IP or FQDN format"
-  }
+.EXAMPLE
+PS C:\> Get-ActivationPattern -IpAddress "192.168.1.100" -DomainName "server01.example.com"
 
-  if ($Key -notmatch $script:windowsKeyRegex) {
-    throw "Incorrect Windows Key Format"
-  }
+Description: Validates IP address and domain name patterns for activation purposes.
 
-  if (-not (Test-Connection -ComputerName $Server -Count 2 -Quiet)) {
-    throw "No route to KMS Server"
-  }
+.EXAMPLE
+PS C:\> Set-KmsActivation -Server "kms.company.local" -Key "XXXXX-YYYYY-ZZZZZ-WWWWW-VVVVV"
 
-  if (-not (Test-NetConnection -ComputerName $Server -Port 1688)) {
-    throw "Port 1688 not open on KMS Server"
-  }
+Description: Configures Windows to use a KMS server for activation.
 
-  $activationKey = $Key.ToUpper()
+.EXAMPLE
+PS C:\> Set-MakActivation -Key "AAAAA-BBBBB-CCCCC-DDDDD-EEEEE"
 
-  if ($PSCmdlet.ShouldProcess("KMS Server Configuration", "Set KMS Server to $Server and install activation key $Key")) {
-    try {
-      cscript.exe /NoLogo $script:slmgrPath /ipk $activationKey
-      if ($LASTEXITCODE -ne 0) {
-          throw "Error installing product key. Exit Code: $LASTEXITCODE"
+Description: Activates Windows using a Multiple Activation Key (MAK).
+
+.NOTES
+Author: Tech Writer
+Date Created: January 29, 2026
+Module Name: WindowsActivation
+Version: 1.0.0
+
+Module Structure:
+- Private/: Contains internal helper functions (not exported)
+- Public/: Contains exported functions for user access
+
+Exported Functions:
+- Get-ActivationPattern: Validates activation-related patterns
+- Get-ActivationStatus: Retrieves Windows activation status
+- Set-KmsActivation: Configures KMS-based activation
+- Set-MakActivation: Configures MAK-based activation
+
+Prerequisites:
+- Windows operating system
+- Administrative privileges for activation functions
+- slmgr.vbs (included with Windows)
+- Internet connectivity for MAK activation
+
+Security Notes:
+- Activation functions require elevated privileges
+- Product keys should be treated as sensitive information
+- Use in production environments with appropriate change controls
+#>
+foreach ($folder in @('Private', 'Public')) {
+  $root = Join-Path -Path $PSScriptRoot -ChildPath $folder
+  if (Test-Path -Path $root) {
+    Write-Verbose "processing folder $root"
+    $files = Get-ChildItem -Path $root -Filter '*.ps1'
+    $files | Where-Object { $_.Name -notlike '*.Tests.ps1' } |
+      ForEach-Object {
+        Write-Verbose "Dot-sourcing $($_.Name)"
+        . $_.FullName
       }
-      cscript.exe /NoLogo $script:slmgrPath /skms $Server
-      if ($LASTEXITCODE -ne 0) {
-          throw "Error setting KMS Server. Exit Code: $LASTEXITCODE"
-      }
-      cscript.exe /NoLogo $script:slmgrPath /ato
-      if ($LASTEXITCODE -ne 0) {
-          throw "Error activating Windows. Exit Code: $LASTEXITCODE"
-      }
-      $activationStatus = Get-Activation
-      return $activationStatus
-    } catch {
-      throw "Error during licensing operation: $_"
-    }
-  }
-}
-
-function Set-MakActivation() {
-  [CmdletBinding(SupportsShouldProcess=$true, ConfirmImpact='High')]
-  param(
-    [Parameter(Mandatory=$true)]
-    [string]$Key
-  )
-
-  $Key.Replace(' ', '')
-
-  $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
-  $currentPrincipal = new-object Security.Principal.WindowsPrincipal($currentUser)
-  $isAdmin = $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-
-  if (-not $isAdmin) {
-    throw "This command requires administrative privileges"
-  }
-
-  if ([string]::IsNullOrEmpty($Key)) {
-    throw "Key parameter cannot be empty or have a null value."
-  }
-
-  if ($Key -notmatch $script:windowsKeyRegex) {
-    throw "Incorrect Windows Key Format"
-  }
-
-  $activationKey = $Key.ToUpper()
-
-  if ($PSCmdlet.ShouldProcess("Install Multiple Activation Key", "Set MAK Key and install activation key $Key")) {
-    try {
-      cscript.exe /NoLogo $script:slmgrPath /ipk $activationKey
-      if ($LASTEXITCODE -ne 0) {
-          throw "Error installing product key. Exit Code: $LASTEXITCODE"
-      }
-      cscript.exe /NoLogo $script:slmgrPath /ato
-      if ($LASTEXITCODE -ne 0) {
-          throw "Error activating Windows. Exit Code: $LASTEXITCODE"
-      }
-      $activationStatus = Get-Activation
-      return $activationStatus
-    } catch {
-      throw "Error during licensing operation: $_"
-    }
   }
 }
+$exportedFunctions = (Get-ChildItem -Path (Join-Path $PSScriptRoot 'Public') -Filter '*.ps1').BaseName
+Export-ModuleMember -Function $exportedFunctions
+
+
