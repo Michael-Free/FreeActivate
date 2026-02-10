@@ -3,7 +3,7 @@
 Windows Activation Management module for PowerShell.
 
 .DESCRIPTION
-The WindowsActivation module provides comprehensive tools for managing Windows
+The FreeActivate module provides comprehensive tools for managing Windows
 activation and licensing. It includes functions for retrieving activation status,
 validating activation patterns, configuring KMS (Key Management Service) activation,
 and setting MAK (Multiple Activation Key) activation.
@@ -23,15 +23,10 @@ None at the module level. See individual functions for specific input requiremen
 None at the module level. See individual functions for specific output types.
 
 .EXAMPLE
-PS C:\> Import-Module WindowsActivation
+PS C:\> Import-Module FreeActivate
 PS C:\> Get-ActivationStatus
 
 Description: Imports the module and retrieves the current Windows activation status.
-
-.EXAMPLE
-PS C:\> Get-ActivationPattern -IpAddress "192.168.1.100" -DomainName "server01.example.com"
-
-Description: Validates IP address and domain name patterns for activation purposes.
 
 .EXAMPLE
 PS C:\> Set-KmsActivation -Server "kms.company.local" -Key "XXXXX-YYYYY-ZZZZZ-WWWWW-VVVVV"
@@ -44,17 +39,15 @@ PS C:\> Set-MakActivation -Key "AAAAA-BBBBB-CCCCC-DDDDD-EEEEE"
 Description: Activates Windows using a Multiple Activation Key (MAK).
 
 .NOTES
-Author: Tech Writer
+Author: Michael Free
 Date Created: January 29, 2026
-Module Name: WindowsActivation
-Version: 1.0.0
+Module Name: FreeActivate
 
 Module Structure:
 - Private/: Contains internal helper functions (not exported)
 - Public/: Contains exported functions for user access
 
 Exported Functions:
-- Get-ActivationPattern: Validates activation-related patterns
 - Get-ActivationStatus: Retrieves Windows activation status
 - Set-KmsActivation: Configures KMS-based activation
 - Set-MakActivation: Configures MAK-based activation

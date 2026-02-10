@@ -61,7 +61,7 @@ Set-MakActivation -ProductKey "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
 
 ## Module Information
 
-- Version: MODULE_VERSION
+- Version: v0.2.21
 - Author: Michael Free
 - License: See LICENSE file 
 - Project URL: https://github.com/Michael-Free/FreeActivate/
